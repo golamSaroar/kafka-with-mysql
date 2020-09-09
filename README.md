@@ -1,6 +1,6 @@
 ## Kafka Starter with MySQL
 
-The Producer generates some numbers and the Consumer inserts those numbers into a mysql database. 
+The Producer reads json data from an external file and the Consumer inserts the data into a mysql database. 
 
 ### Pre-requisites
 
