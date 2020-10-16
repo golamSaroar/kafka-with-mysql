@@ -1,18 +1,13 @@
+from stream_processing import kafka_producer
+from json import load
 from time import sleep
-from json import load, dumps
-from kafka import KafkaProducer
-from config import kafka
 
-producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
-                         value_serializer=lambda x: 
-                         dumps(x).encode('utf-8'))
+if __name__ == '__main__':
+    kafka_producer = kafka_producer.Producer()
 
-def sendMessage(data):
-    producer.send(kafka["topic"], value=data)
+    with open('stream_processing/data.json', encoding="utf-8") as f:
+        data = load(f)
 
-with open('data.json') as f:
-  data = load(f)
-
-for e in range(1000):
-    sendMessage(data)
-    sleep(5)
+    for e in range(1000):
+        kafka_producer.send_message(data)
+        sleep(2)

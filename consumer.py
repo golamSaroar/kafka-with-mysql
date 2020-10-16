@@ -1,18 +1,6 @@
-from kafka import KafkaConsumer
-from json import loads
-import db
-from config import kafka
+from stream_processing import kafka_consumer
 
-consumer = KafkaConsumer(
-     kafka["topic"],
-     bootstrap_servers=['localhost:9092'],
-     auto_offset_reset='earliest',
-     enable_auto_commit=True,
-     group_id='my-group',
-     value_deserializer=lambda x: loads(x.decode('utf-8')))
 
-db.createTable()
-
-for message in consumer:
-    message = message.value
-    db.insertRow(message)
+if __name__ == '__main__':
+    receiver = kafka_consumer.Consumer()
+    receiver.receive()
